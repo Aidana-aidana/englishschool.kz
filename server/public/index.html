@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курс Английского Языка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2edf9;
+            color: #000;
+            position: relative;
+        }
+
+        .dark-mode {
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+        /* Header */
+        .header {
+            background-color: #f2edf9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .dark-mode .header {
+            background-color: #333;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .dark-mode .header h1 {
+            color: #fff;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .cta-button {
+            background-color: #ffde6a;
+            color: #000;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-mode .cta-button {
+            background-color: #ffb100;
+        }
+
+        /* Формы входа и регистрации */
+        .form-container {
+            display: none;
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            text-align: center;
+            padding: 30px;
+            background-color: #fff;
+            margin: 30px auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            width: 400px;
+            z-index: 100;
+        }
+
+        .dark-mode .form-container {
+            background-color: #333;
+        }
+
+        .form-container input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .dark-mode .form-container input {
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #555;
+        }
+
+        .form-container button {
+            background-color: #ffde6a;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #ffb100;
+        }
+
+        .dark-mode .form-container button {
+            background-color: #ffb100;
+        }
+
+        /* Анимация появления форм */
+        .form-container.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Стиль блоков для клиентов */
+        section {
+            padding: 50px;
+            text-align: center;
+            margin: 30px 0;
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-mode section {
+            background-color: #222;
+        }
+
+        /* Анимированные блоки преимуществ */
+        .advantages ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .advantages li {
+    background-color: #ffde6a;
+    padding: 40px 20px; /* Увеличиваем верхний и нижний отступ */
+    border-radius: 15px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 150px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.advantages h2 {
+    margin-bottom: 30px; /* Добавляем отступ между заголовком и контентом */
+}
+
+.pricing h2 {
+    margin-bottom: 30px; /* Добавляем отступ между заголовком и таблицей */
+}
+
+        .advantages li:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode .advantages li {
+            background-color: #ffb100;
+            color: #000;
+        }
+
+        /* Центрирование и анимация для блока приветствия */
+        .dashboard {
+            text-align: center;
+            margin-top: 30px;
+            padding: 50px;
+            animation: slideIn 1s ease-out;
+        }
+
+        .dashboard h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        /* Блок с тарифами */
+        .pricing {
+            background-color: #e0d7f4;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .dark-mode .pricing {
+            background-color: #444;
+        }
+
+        .pricing table {
+            margin: 0 auto;
+            width: 50%;
+            border-collapse: collapse;
+        }
+
+        .pricing th, .pricing td {
+            border: 1px solid #ccc;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .dark-mode .pricing th, .dark-mode .pricing td {
+            border: 1px solid #666;
+        }
+
+        .pricing th {
+            background-color: #ffde6a;
+            font-weight: bold;
+        }
+
+        .dark-mode .pricing th {
+            background-color: #ffb100;
+        }
+
+        /* Видеофон (после шапки) */
+        .video-section {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .video-section video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #ffde6a;
+            padding: 20px;
+            text-align: center;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .footer p {
+            font-size: 1rem;
+            color: #000;
+        }
+
+        /* Стили для блока "Наша методология обучения" */
+.methodology {
+    background-color: #f0f4ff; /* Светлый фоновый цвет */
+    border-radius: 20px; /* Скругленные углы */
+    padding: 50px;
+    margin: 30px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные анимации */
+}
+
+.methodology:hover {
+    transform: translateY(-10px); /* Эффект подъема при наведении */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Усиливаем тень при наведении */
+}
+
+.methodology h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333; /* Цвет заголовка */
+}
+
+.methodology p {
+    font-size: 1.2rem; /* Увеличиваем размер текста */
+    line-height: 1.6; /* Межстрочный интервал для лучшей читаемости */
+    color: #555; /* Цвет текста */
+    margin-bottom: 0; /* Убираем отступы снизу */
+}
+
+/* Бургер-меню */
+.burger-menu {
+    display: none; /* Изначально скрыто */
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 15px;
+}
+
+/* Мобильное меню */
+.mobile-menu {
+    display: none; /* Скрываем мобильное меню по умолчанию */
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    top: 60px; /* Под заголовком */
+    right: 0;
+    width: 100%;
+    background-color: #4a4a47; /* Цвет фона меню */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.mobile-menu.show {
+    display: flex; /* Показываем мобильное меню */
+}
+
+/* Стили для кнопок в мобильном меню */
+.mobile-menu .cta-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+}
+
+/* Стили для мобильной версии */
+@media (max-width: 768px) {
+    .cta-buttons {
+        display: none; /* Скрываем обычные кнопки на мобильной версии */
+    }
+
+    .burger-menu {
+        display: block; /* Показываем бургер-меню */
+    }
+
+    .mobile-menu {
+        display: none; /* Скрываем мобильное меню */
+    }
+}
+
+/* Кнопка Закрыть для мобильного меню */
+/* Кнопка Закрыть для мобильного меню */
+
+.close-btn {
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            z-index: 300;
+        }
+
+@media (max-width: 768px) {
+    .cta-buttons {
+        display: none; /* Скрываем обычные кнопки на мобильной версии */
+    }
+
+    .burger-menu {
+        display: block; /* Показываем бургер-меню */
+    }
+
+    .mobile-menu {
+        display: none; /* Скрываем мобильное меню по умолчанию */
+    }
+
+    .mobile-menu.show {
+        display: flex; /* Показываем мобильное меню */
+    }
+}
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Английский Челлендж</h1>
+        <div class="cta-buttons">
+            <button class="cta-button" onclick="toggleForm('login')">Войти</button>
+            <button class="cta-button" onclick="toggleForm('signup')">Зарегистрироваться</button>
+            <button class="cta-button" onclick="toggleDarkMode()">Тёмная тема</button>
+        </div>
+        <!-- Иконка бургер-меню для мобильной версии -->
+        <div class="burger-menu" onclick="toggleBurgerMenu()">
+            &#9776;
+        </div>
+    </header>
+    
+    <!-- Мобильное меню -->
+  <!-- Мобильное меню -->
+<div class="mobile-menu" id="mobileMenu">
+    <span class="close-btn" onclick="toggleBurgerMenu()">×</span> <!-- Кнопка Закрыть -->
+    <button class="cta-button" onclick="toggleForm('login')">Войти</button>
+    <button class="cta-button" onclick="toggleForm('signup')">Зарегистрироваться</button>
+    <button class="cta-button" onclick="toggleDarkMode()">Тёмная тема</button>
+</div>
+
+    <!-- Видеофон -->
+    <div class="video-section">
+        <video autoplay muted loop>
+            <source src="images/100.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
+    </div>
+
+    <!-- Форма входа -->
+    <div class="form-container" id="login-form">
+        <h2>Вход</h2>
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-password" placeholder="Пароль">
+        <button onclick="login()">Войти</button>
+        <p>Нет аккаунта? <a href="#" onclick="toggleForm('signup')">Зарегистрируйтесь</a></p>
+    </div>
+
+    <!-- Форма регистрации -->
+    <div class="form-container" id="signup-form">
+        <h2>Регистрация</h2>
+        <input type="text" id="signup-name" placeholder="Полное имя">
+        <input type="email" id="signup-email" placeholder="Email">
+        <input type="password" id="signup-password" placeholder="Пароль">
+        <button onclick="signup()">Зарегистрироваться</button>
+        <p>Уже есть аккаунт? <a href="#" onclick="toggleForm('login')">Войти</a></p>
+    </div>
+
+    <!-- Личный кабинет -->
+   <!-- Личный кабинет -->
+<div class="dashboard" id="dashboard">
+    <h2>Добро пожаловать, <span id="student-name"></span>!</h2>
+    <p>Ваш персонализированный кабинет будет здесь.</p>
+    
+    <!-- Форма для загрузки файла -->
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label for="fileInput">Загрузить файл:</label>
+        <input type="file" id="fileInput" name="uploadedFile" accept=".png, .jpg, .jpeg, .pdf">
+        <button type="submit">Загрузить</button>
+    </form>
+    
+    <!-- Зона для отображения загрузки -->
+    <div id="uploadStatus"></div>
+</div>
+
+    <!-- Блок с преимуществами -->
+    <section class="advantages">
+        <h2>Преимущества нашего курса</h2>
+        <ul>
+            <li>Гибкое расписание занятий</li>
+            <li>Преподаватели – носители языка</li>
+            <li>Персонализированные планы обучения</li>
+            <li>Поддержка 24/7</li>
+            <li>Сертификаты международного образца</li>
+        </ul>
+    </section>
+
+    <!-- Блок с тарифами -->
+    <section class="pricing">
+        <h2>Тарифы и цены</h2>
+        <table>
+            <tr>
+                <th>Тариф</th>
+                <th>Длительность</th>
+                <th>Цена</th>
+            </tr>
+            <tr>
+                <td>Стандарт</td>
+                <td>1 месяц</td>
+                <td>10 000 ₽</td>
+            </tr>
+            <tr>
+                <td>Премиум</td>
+                <td>3 месяца</td>
+                <td>25 000 ₽</td>
+            </tr>
+            <tr>
+                <td>VIP</td>
+                <td>6 месяцев</td>
+                <td>40 000 ₽</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Блок "Наша методология" -->
+   <!-- Блок "Наша методология обучения" -->
+<section class="methodology">
+    <h2>Наша методология обучения</h2>
+    <p>Мы используем современные методики преподавания, чтобы ваши занятия были максимально эффективными. Каждое занятие основано на практическом использовании языка, что помогает быстрее достичь результатов.</p>
+</section>
+
+    <!-- Блок с FAQ -->
+   <!-- Блок FAQ -->
+<section class="faq">
+    <h2>Часто задаваемые вопросы</h2>
+    <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+            Как долго длится курс?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+            <p>Длительность курса зависит от выбранного тарифа. Стандарт – 1 месяц, Премиум – 3 месяца, VIP – 6 месяцев.</p>
+        </div>
+    </div>
+    <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+            Выдаёте ли вы сертификаты?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+            <p>Да, после завершения курса вы получите сертификат международного образца.</p>
+        </div>
+    </div>
+    <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+            Есть ли скидки на обучение?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+            <p>Да, мы регулярно проводим акции и скидки для новых студентов. Подпишитесь на нашу рассылку, чтобы не пропустить!</p>
+        </div>
+    </div>
+</section>
+
+<!-- Стили для блока FAQ -->
+<style>
+    .faq {
+        margin: 40px auto;
+        max-width: 800px;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .faq h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .faq-item {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 10px;
+    }
+
+    .faq-question {
+        background: none;
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-size: 1.2rem;
+        padding: 10px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: color 0.3s ease;
+    }
+
+    .faq-question:hover {
+        color: #0073e6; /* Цвет при наведении */
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #555;
+    }
+
+    .faq-answer p {
+        margin: 10px 0;
+    }
+
+    .faq-icon {
+        font-size: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .faq-question.active .faq-icon {
+        transform: rotate(45deg); /* Иконка меняет направление */
+    }
+
+    .faq-answer.show {
+        max-height: 200px; /* Высота может быть увеличена в зависимости от контента */
+    }
+</style>
+
+<!-- Скрипт для раскрытия вопросов -->
+<script>
+    function toggleFaq(element) {
+        const answer = element.nextElementSibling;
+        const isVisible = answer.classList.contains('show');
+        
+        document.querySelectorAll('.faq-answer').forEach(function (faq) {
+            faq.classList.remove('show');
+        });
+
+        document.querySelectorAll('.faq-question').forEach(function (question) {
+            question.classList.remove('active');
+        });
+
+        if (!isVisible) {
+            answer.classList.add('show');
+            element.classList.add('active');
+        }
+    }
+</script>
+
+    <footer class="footer">
+        <p>© 2024 Курс Английского Языка</p>
+        <p>Контакт: english@course.com</p>
+    </footer>
+
+    <script>
+        // Переключение темы
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Управление формами
+        function toggleForm(formType) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+
+            // Убираем все формы
+            loginForm.classList.remove('show');
+            signupForm.classList.remove('show');
+            document.body.classList.remove('active-form');
+
+            // Открываем нужную форму
+            if (formType === 'login') {
+                loginForm.classList.add('show');
+                document.body.classList.add('active-form');
+            } else if (formType === 'signup') {
+                signupForm.classList.add('show');
+                document.body.classList.add('active-form');
+            }
+        }
+
+        // Функция закрытия форм при нажатии на фон
+        document.addEventListener('click', function(event) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const clickedInsideForm = loginForm.contains(event.target) || signupForm.contains(event.target);
+            const clickedButton = event.target.classList.contains('cta-button');
+
+            if (!clickedInsideForm && !clickedButton) {
+                loginForm.classList.remove('show');
+                signupForm.classList.remove('show');
+                document.body.classList.remove('active-form');
+            }
+        });
+
+        // Функция регистрации
+        function signup() {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            if (name && email && password) {
+                localStorage.setItem('studentName', name);
+                localStorage.setItem('studentEmail', email);
+                localStorage.setItem('studentPassword', password);
+                alert('Регистрация прошла успешно!');
+                toggleForm('login');
+            } else {
+                alert('Пожалуйста, заполните все поля.');
+            }
+        }
+
+        // Функция входа
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const storedEmail = localStorage.getItem('studentEmail');
+            const storedPassword = localStorage.getItem('studentPassword');
+
+            if (email === storedEmail && password === storedPassword) {
+                const studentName = localStorage.getItem('studentName');
+                document.getElementById('student-name').innerText = studentName;
+                toggleForm('dashboard');
+            } else {
+                alert('Неверный email или пароль.');
+            }
+        }
+
+        // FAQ Toggle
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Открытие и закрытие бургер-меню
+function toggleBurgerMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('show'); // Добавляем/убираем класс 'show'
+}
+
+
+// Открытие и закрытие бургер-меню
+function toggleBurgerMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('show'); // Добавляем/убираем класс 'show'
+}
+
+// Функция для загрузки файла
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+
+    if (file) {
+        const formData = new FormData();
+        formData.append('uploadedFile', file);
+        
+        // Выводим сообщение о начале загрузки
+        document.getElementById('uploadStatus').innerText = 'Загрузка файла...';
+
+        // Отправляем файл на сервер
+        fetch('/upload', { // Измените URL на правильный маршрут сервера
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка при загрузке файла: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Успешная загрузка
+            document.getElementById('uploadStatus').innerText = 'Файл успешно загружен!';
+            console.log('Ответ от сервера:', data);
+        })
+        .catch(error => {
+            // Ошибка при загрузке
+            document.getElementById('uploadStatus').innerText = 'Ошибка при загрузке файла.';
+            console.error('Ошибка:', error);
+        });
+    } else {
+        document.getElementById('uploadStatus').innerText = 'Пожалуйста, выберите файл.';
+    }
+});
+    </script>
+
+</body>
+</html>
